@@ -43,12 +43,10 @@ const Login = () => {
                         if( res.data)
                         {
                             setUser({
-                                username: res.data.user.username,
+                                username: res.data.username,
                                 password:password,
-                                email: res.data.user.password,
-                                id: res.data.user.pk,
-                                bio: res.data.bio,
-                                phone: res.data.phone,
+                                email: res.data.email,
+                                id: res.data.pk,
                                 token:token,
                             })
                             

@@ -6,10 +6,10 @@ import { UserContext } from '../../Context/User/UserContext';
 import { GroupContext } from '../../Context/GroupContext/GroupContext';
 import Group from '../Group/Group';
 
-const allGroupsURL = 'http://127.0.0.1:8000/api/groups/all'
-const addGroupURL = 'http://127.0.0.1:8000/api/groups/new/';
+const allGroupsURL = 'https://backendblogger.herokuapp.com/api/groups/all'
+const addGroupURL = 'https://backendblogger.herokuapp.com/api/groups/new/';
 
-const postURL = 'http://127.0.0.1:8000/api/posts/create/'
+const postURL = 'https://backendblogger.herokuapp.com/api/posts/create/'
 
 const Sidebar = () => {
 
