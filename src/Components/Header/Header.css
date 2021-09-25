@@ -1,0 +1,24 @@
+.header{
+    margin-top: 70px;
+}
+
+.headerTitles{
+    display: flex;
+    flex-direction: column;
+    color: #444;
+    font-size: 18px;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.headerTitlessm{
+    position: absolute;
+    top: 10%;
+    font-size: 20px;
+}
+.headerTitleslg{
+    position: absolute;
+    top: 8%;
+    font-size: 80px;
+    
+}

@@ -1,0 +1,12 @@
+.posts{
+    flex: 9;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 5px 50px;
+
+}
+
+.posts:first-child{
+    margin-top: 50px
+}

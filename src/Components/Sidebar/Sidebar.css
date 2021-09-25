@@ -1,0 +1,77 @@
+.sidebar{
+    flex:3;
+    flex-direction: column;
+}
+
+.reload{
+    align-self: flex-end;
+    cursor: pointer;
+    
+}
+
+.groupControls{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px 35px ;
+}
+
+.addGroup:hover{
+    animation: add 1s infinite;
+    cursor: pointer;
+}
+
+@keyframes add {
+    from{
+        transform: scale(1);
+    }
+    to{
+        transform: scale(1.5);
+    }
+}
+
+.reload:hover{
+    animation: example 1s infinite ease-out ;
+}
+
+@keyframes example {
+  from{
+      transform: rotateZ(0deg);
+    } to{
+        transform: rotateZ(360deg);
+  }
+
+}
+
+/*<div className="createGroupForm">
+ <form className="createGroup">
+                    <input type="text" className="groupInput" placeholder="Enter Group Name..." />
+                    <textarea type="text" className="groupInput"  placeholder="Enter Group Description..."/>
+                    <button type="submit" className="groupSubmit" onClick={() => addGroupHandler(token)}>create</button>
+                    </form>
+                    </div> */
+
+.createGroupForm{
+    display: flex;
+    flex-direction: column;   
+}
+.groupInput{
+    border: none;
+    padding: 20px;
+    font-size: 20px;
+
+}
+.groupInput:focus{
+    outline:none;
+}
+
+.groupSubmit{
+    color: white;
+    background-color: teal;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 20px;
+}

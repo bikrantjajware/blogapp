@@ -1,0 +1,54 @@
+.post{
+    
+    margin: 0px 25px 40px 25px;
+    border: 1px solid blanchedalmond;
+    border-radius: 10px;
+    padding: 10px 40px;
+}
+.post:hover{
+    box-shadow: 15px 15px lightgrey;
+    background-image: linear-gradient(to right,red,blue);
+    background-clip:text;
+    color: transparent;
+
+}
+.postTitle{
+    display: flex;
+    flex-direction: row;
+    
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 15px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp:1;
+    -webkit-box-orient: vertical;
+    display: flex;
+    justify-content: space-between;
+}
+
+.postDate{
+    font-style: italic;
+    font-size: 13px;
+    color: grey;
+
+}
+
+.postDesc{
+    font-size: 15px;
+    color: #444;
+    line-height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.postMeta{
+    display: flex;
+    justify-content: space-between;
+}

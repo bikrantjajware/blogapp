@@ -1,0 +1,35 @@
+.singlePost{
+    flex: 9;
+}
+
+.singlePostWrapper{
+    padding: 20px;
+    padding-right: 0;
+}
+
+.singlePostTitle{
+    text-align: center;
+    margin: 10px;
+    font-size: 34px;
+}
+.singlePostEdit{
+    float: right;
+    font-size: 18px;
+}
+.singlePostIcon{
+    margin-left:10px;
+    cursor: pointer;
+}
+
+.singlePostInfo{
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    font-size: 18px;
+    margin-right: 20px;
+}
+
+.singlePostDesc{
+    font-size: 20px;
+    line-height:30px;
+}

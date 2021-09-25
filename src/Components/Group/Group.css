@@ -1,0 +1,63 @@
+.group{
+    
+    margin: 0px 25px 40px 25px;
+    border: 1px solid burlywood;
+    border-radius: 10px;
+    padding: 10px 40px;
+
+}
+.group:hover{
+    box-shadow: 15px 15px #ff99cc;
+    background-image: linear-gradient(to bottom right, #000066 0%, #9900ff 100%);
+    background-clip:text; 
+    color: transparent;
+
+}
+.groupTitle{
+    display: flex;
+    flex-direction: column;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp:1;
+    -webkit-box-orient: vertical;
+}
+
+.groupDate{
+    font-style: italic;
+    font-size: 13px;
+    color: grey;
+
+}
+
+.groupDesc{
+    font-size: 15px;
+    color: #444;
+    line-height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.groupMeta{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.groupHead{
+ margin: 15px 0;
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+}
+
+.groupJoin,.groupExit{
+
+    cursor: pointer;
+}

@@ -1,0 +1,23 @@
+.home{
+    display: flex;
+    flex-direction: column;
+}
+
+.linebreak{
+    background-color: turquoise;
+    height: 1px;
+    margin: 20px 50px;
+}
+.row{ 
+    display: flex;
+    flex: 12;
+    flex-direction: row;
+}
+.sidebar{
+    display: flex;
+    flex: 3;
+}
+.posts{
+    display: flex;
+    flex: 6;
+}

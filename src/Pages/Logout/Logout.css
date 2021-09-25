@@ -1,0 +1,9 @@
+.logout{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 30%;
+    font-size: 30px;
+    /* background-color: blueviolet; */
+}
