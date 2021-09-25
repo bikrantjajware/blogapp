@@ -7,7 +7,7 @@ import axios from 'axios';
 import { UserContext } from '../../Context/User/UserContext';
 import { GroupContext } from '../../Context/GroupContext/GroupContext';
 
-const allPostURL = 'http://127.0.0.1:8000/api/posts/all/';
+const allPostURL = 'https://backendblogger.herokuapp.com/api/posts/all/';
 
 const Posts = () => {
 

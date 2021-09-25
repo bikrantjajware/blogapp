@@ -6,8 +6,8 @@ import { Link,useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../../Context/User/UserContext';
 
-const getDeleteURL = (id) => (`http://127.0.0.1:8000/api/posts/delete/${id}/`);
-const allPostURL = 'http://127.0.0.1:8000/api/posts/all/';
+const getDeleteURL = (id) => (`https://backendblogger.herokuapp.com/api/posts/delete/${id}/`);
+const allPostURL = 'https://backendblogger.herokuapp.com/api/posts/all/';
 
 
 

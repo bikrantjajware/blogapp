@@ -2,7 +2,7 @@ import axios from 'axios';
 import register from '../../Pages/Register/register';
 
 
-const registerURL = 'http://127.0.0.1:8000/api/accounts/register'
+const registerURL = 'https://backendblogger.herokuapp.com/api/accounts/register'
 
 axios.post(registerURL,{
     username:'player1',

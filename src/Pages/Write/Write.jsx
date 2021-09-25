@@ -8,7 +8,7 @@ import { GroupContext } from '../../Context/GroupContext/GroupContext';
 
 const Write = () => {
 
-    const postURL = 'http://127.0.0.1:8000/api/posts/create/'
+    const postURL = 'https://backendblogger.herokuapp.com/api/posts/create/'
     
     const [user,setUser] = useContext(UserContext);
     const [posts,setPosts] = useContext(PostsContext);

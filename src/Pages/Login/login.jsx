@@ -7,8 +7,8 @@ import { PostsContext } from '../../Context/PostsContext/PostsContext';
 import { GroupContext } from '../../Context/GroupContext/GroupContext';
 
 
-const allPostURL = 'http://127.0.0.1:8000/api/posts/all/';
-const allGroupsURL = 'http://127.0.0.1:8000/api/groups/all';
+const allPostURL = 'https://backendblogger.herokuapp.com/api/posts/all/';
+const allGroupsURL = 'https://backendblogger.herokuapp.com/api/groups/all';
 
 const Login = () => {
 
@@ -26,7 +26,7 @@ const Login = () => {
         e.preventDefault();
      
        
-        axios.post('http://127.0.0.1:8000/api/accounts/token',{
+        axios.post('https://backendblogger.herokuapp.com/api/accounts/token',{
         username:username,
         password:password,
         }).then( res => {
@@ -35,7 +35,7 @@ const Login = () => {
             {
                 const token = res.data.token;
                 
-                axios.get('http://127.0.0.1:8000/api/accounts/login',
+                axios.get('https://backendblogger.herokuapp.com/api/accounts/login',
                        { 
                            headers: {
                             Authorization: 'token '+token,

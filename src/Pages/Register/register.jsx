@@ -6,7 +6,7 @@ import { UserContext } from '../../Context/User/UserContext';
 
 
 
-const registerURL = 'http://127.0.0.1:8000/api/accounts/register'
+const registerURL = 'https://backendblogger.herokuapp.com/api/accounts/register'
 
 
 

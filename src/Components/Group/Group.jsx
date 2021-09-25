@@ -7,9 +7,9 @@ import './Group.css';
 import axios from 'axios';
 
 // return <Group key={g.id} name={g.name} desc={g.description} members={g.members.count} posts={g.posts.length} />
-const groupLeave = (slug) => `http://127.0.0.1:8000/api/groups/leave/${slug}`;
-const groupJoin = (slug) => `http://127.0.0.1:8000/api/groups/join/${slug}`;
-const allGroupsURL = 'http://127.0.0.1:8000/api/groups/alljoined';
+const groupLeave = (slug) => `https://backendblogger.herokuapp.com/api/groups/leave/${slug}`;
+const groupJoin = (slug) => `https://backendblogger.herokuapp.com/api/groups/join/${slug}`;
+const allGroupsURL = 'https://backendblogger.herokuapp.com/api/groups/alljoined';
 
 
 
