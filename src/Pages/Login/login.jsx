@@ -34,7 +34,6 @@ const Login = () => {
             if(res.data)
             {
                 const token = res.data.token;
-                
                 axios.get('https://backendblogger.herokuapp.com/api/accounts/login',
                        { 
                            headers: {
@@ -53,7 +52,7 @@ const Login = () => {
                                 token:token,
                             })
                             
-                            history.push("/");
+                            
                         }
                         
                     })
@@ -80,6 +79,8 @@ const Login = () => {
                         }
                     )
 
+                    
+
             }
         }).catch( error =>{
             history.push('/logout');
@@ -87,7 +88,8 @@ const Login = () => {
         })
 
 
-       
+        history.push("/");
+    
 
     }
     return (
