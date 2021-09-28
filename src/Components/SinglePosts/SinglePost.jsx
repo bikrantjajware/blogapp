@@ -67,7 +67,13 @@ const SinglePost = (props) => {
                 setLoading(false)
                 setEditing(false);
 
-            })
+            }).catch(
+                err => {
+                    setLoading(false)
+                    setEditing(false);
+                    alert(err);
+                }
+            )
         })();
 
 
@@ -92,6 +98,9 @@ const SinglePost = (props) => {
                     }
                 }).then( res => {
                     setDeleting(false);
+                }).catch( err => {
+                    alert(err);
+                    setDeleting(false)
                 })
                 
                 await instance.get(`api/posts/all/`,{

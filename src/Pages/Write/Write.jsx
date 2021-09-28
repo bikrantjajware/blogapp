@@ -60,7 +60,7 @@ const Write = () => {
 
                     }
                 ).catch ( err => {
-
+                    setLoading(false);
                     setTitle('');
                     setMsg('');
                     alert(err);

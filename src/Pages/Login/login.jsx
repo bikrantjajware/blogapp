@@ -79,6 +79,8 @@ const Login = () => {
                     setLoading(false)
                     history.push("/");
                 }).catch( error =>{
+                    setLoading(false)
+                    
                     history.push("/error",{
                         message:error.response.data.non_field_errors
                     });

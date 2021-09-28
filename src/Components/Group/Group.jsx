@@ -34,7 +34,11 @@ const Group = (props) => {
             }).then( res => {
                 setLoading(false);
                 props.reload(token);
-
+                
+            }).catch ( err => {
+                alert(err);
+                setLoading(false);
+                
             });
 
         })();
@@ -53,7 +57,12 @@ const Group = (props) => {
             }).then( res => {
                 setLoading(false);
                 props.reload(token);
-            });
+            }).catch(
+                err => {
+                    alert(err);
+                    setLoading(false);
+                }
+            ) ;
 
         })();
         

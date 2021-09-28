@@ -66,6 +66,7 @@ const Register = () => {
                         history.push("/");
                     }
                     else{
+                        setLoading(false);
                         var msg = "";
                         msg += res.data.username? res.data.username + '\n':"";
                         msg += res.data.email ? res.data.email + '\n' : "";
@@ -75,7 +76,10 @@ const Register = () => {
                    
                     
                 }
-            )
+            ).catch ( err => {
+                setLoading(false);
+                alert(err);
+            })
         }// end async function registerUser(), now call registerUser();
         registerUser();
 

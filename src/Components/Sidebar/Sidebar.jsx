@@ -77,6 +77,7 @@ const Sidebar = () => {
                 setLoading(false);
                 loadGroups(token);
             }).catch( err => {
+                setLoading(false);
                 console.log(err);
             })
         })();
