@@ -12,7 +12,7 @@ console.log(message);
         <div className="error">
             <h1> The Page is not available</h1>
          {
-             message == undefined ?
+             message === undefined ?
              "" : <p> <strong> {message} </strong></p>
          }
         </div>

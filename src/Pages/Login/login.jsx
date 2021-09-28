@@ -3,7 +3,6 @@ import './login.css';
 import { Link,useHistory } from 'react-router-dom';
 import instance from '../../axios';
 import { UserContext } from '../../Context/User/UserContext';
-import { PostsContext } from '../../Context/PostsContext/PostsContext';
 import { GroupContext } from '../../Context/GroupContext/GroupContext';
 import Loader from 'react-loader-spinner';
 
@@ -17,7 +16,7 @@ const Login = () => {
     const history = useHistory();
 
     const [user,setUser] = useContext(UserContext);
-    const [posts,setPosts] = useContext(PostsContext);
+
     const [groups,setGroups] = useContext(GroupContext);
 
     const loginHandler =  (e)  => {
@@ -26,7 +25,7 @@ const Login = () => {
         setLoading(true);
 
         (async () => {
-            instance.post(`api/accounts/token`,{
+            await instance.post(`api/accounts/token`,{
                 username:username,
                 password:password,
                 }).then( res => {

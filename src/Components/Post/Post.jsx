@@ -7,7 +7,7 @@ const Post = (props) => {
 
     const [user] = useContext(UserContext);
     
-    const [isAuthor,setIsAuthor] = useState(user==undefined ? false : user.username == props.username ? true : false  )
+    const [isAuthor,setIsAuthor] = useState(user === undefined ? false : (user.username === props.username ? true : false ) )
 
 
     return (

@@ -3,7 +3,7 @@ import './register.css';
 import { Link,useHistory } from 'react-router-dom';
 import instance  from '../../axios';
 import { UserContext } from '../../Context/User/UserContext';
-
+import Loader from 'react-loader-spinner';
 
 
 
@@ -14,6 +14,9 @@ const Register = () => {
     const [password,setPassword] = useState('')
     const [password2,setPassword2] = useState('')
     const [email,setEmail] = useState('')
+    const [loading,setLoading] = useState(false)
+
+
     const history = useHistory();
 
 
@@ -39,45 +42,56 @@ const Register = () => {
         }
         
         
-        
-        instance.post(`api/accounts/register`,{
-            username:username,
-            email : email,
-            password:password,
-            password2:password2,
-            
-        }).then(
-            res => {
+        setLoading(true);
+        async function registerUser () {
+           await instance.post(`api/accounts/register`,{
+                username:username,
+                email : email,
+                password:password,
+                password2:password2,
                 
-                if(res.data.response && res.data.response.includes("successfully"))
-                {
-                    setUser({
-                        username:res.data.username,
-                        email:res.data.email,
-                        password:res.data.password,
-                        token : res.data.token,
-                        message : res.data.response,
-                    })
-                    history.push("/");
+            }).then(
+                res => {
+                    
+                    if(res.data.response && res.data.response.includes("successfully"))
+                    {
+                        setUser({
+                            username:res.data.username,
+                            email:res.data.email,
+                            password:res.data.password,
+                            token : res.data.token,
+                            message : res.data.response,
+                        })
+                        setLoading(false);
+                        history.push("/");
+                    }
+                    else{
+                        var msg = "";
+                        msg += res.data.username? res.data.username + '\n':"";
+                        msg += res.data.email ? res.data.email + '\n' : "";
+                        msg += res.data.password ? res.data.password + '\n' : "";
+                        alert(msg);
+                    }
+                   
+                    
                 }
-                else{
-                    var msg = "";
-                    msg += res.data.username? res.data.username + '\n':"";
-                    msg += res.data.email ? res.data.email + '\n' : "";
-                    msg += res.data.password ? res.data.password + '\n' : "";
-                    alert(msg);
-                }
-               
-                
-            }
-        )
+            )
+        }// end async function registerUser(), now call registerUser();
+        registerUser();
 
     }
 
     return (
         <div className="register">
             <span className="registerTitle">Register</span>
-            <form action="" className="registerForm">
+           {loading ? <Loader 
+                    className="loader"
+                    type="ThreeDots"
+                    color="#00BFFF"
+                    height={window.innerHeight/5}
+                    width={window.innerWidth/5}
+                     /> :
+                      <form action="" className="registerForm">
                 <label>
                     Username
                 </label>
@@ -97,7 +111,7 @@ const Register = () => {
                 <button className="registerButton" onClick={registerUser} > Register</button>
                 <button className="registerLoginButton"> <Link className="link" to="/login">Login</Link></button>
 
-            </form>
+            </form>}
         </div>
     )
 }

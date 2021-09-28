@@ -27,7 +27,7 @@ const Sidebar = () => {
 
 
     const loadGroups = (token) => {
-        if(token=='' || token==undefined)
+        if(token==='' || token===undefined)
         {
             history.push('/login');
             return;
@@ -54,7 +54,7 @@ const Sidebar = () => {
         event.preventDefault();
         setLoading(true);
         
-        if(token == undefined || token=='')
+        if(token === undefined || token === '')
         {
             history.push('/login');
             return;

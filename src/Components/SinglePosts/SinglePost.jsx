@@ -20,6 +20,7 @@ const SinglePost = (props) => {
     const [title,setTitle] = useState('');
     const [message,setMessage] = useState('');
     const [loading,setLoading] = useState(false);
+    const [deleting,setDeleting] = useState(false);
 
     const [user] = useContext(UserContext);
     const [posts,setPosts] = useContext(PostsContext);
@@ -41,14 +42,14 @@ const SinglePost = (props) => {
             )
 
         })();
-    },[])
+    },[props.slug,token])
     
     const updateHandler = (event) => {
         setLoading(true);
         event.preventDefault();
         
 
-        if(token == undefined)
+        if(token === undefined)
         {
             history.push("/error",{message:"please login again"})
         }
@@ -81,29 +82,30 @@ const SinglePost = (props) => {
         
         e.preventDefault();
     
-        
-        instance.delete(`api/posts/delete/${post.id}/`,{
-            
-            headers: {
-             Authorization : 'token '+token,
-            }
-        }).then( res => {
-            // console.log(res.data);
+        setDeleting(true);
+        (async () => {
 
-            
-        })
-
-        instance.get(`api/posts/all/`,{
-            headers : {
-                Authorization: 'token '+token,
-            }
-        }).then(
-            res => {
-                setPosts(prev => prev = res.data);
+               await instance.delete(`api/posts/delete/${post.id}/`,{
                 
-                history.push("/");
-            }
-        )
+                    headers: {
+                    Authorization : 'token '+token,
+                    }
+                }).then( res => {
+                    setDeleting(false);
+                })
+                
+                await instance.get(`api/posts/all/`,{
+                    headers : {
+                        Authorization: 'token '+token,
+                    }
+                }).then(
+                    res => {
+                        setPosts(prev => prev = res.data);
+                        
+                        history.push("/");
+                    }
+                )
+        })();
 
     }
 
@@ -116,7 +118,15 @@ const SinglePost = (props) => {
 
                     <div className="singlePostEdit">
                         <i onClick={ e => setEditing(!editing)} className="singlePostIcon far fa-edit"></i>
-                       <Link to="/" className="link" > <i  onClick = { (e) =>deleteHandler(post,token,e)} className="singlePostIcon fas fa-trash-alt"></i> </Link>
+                             {deleting ? <Loader 
+                                    className="singlePostIcon "
+                                    type="TailSpin"
+                                    color="#00BFFF"
+                                    height={window.innerHeight/40}
+                                    width={window.innerWidth/30}
+                                    /> : <Link to="/" className="link" > 
+                        <i  onClick = { (e) =>deleteHandler(post,token,e)} className="singlePostIcon fas fa-trash-alt"></i> 
+                        </Link>}
                         
                     </div>
                 
@@ -139,7 +149,13 @@ const SinglePost = (props) => {
                     width={window.innerWidth/5}
                      /> : <button type="submit" className="updateButton"  onClick={updateHandler}> Update</button>) : ""}
             </div>
-        </div> :  <h3 className="singlePost singlePostTitle" >No post selected</h3>
+        </div> :  <Loader 
+                    className="loader"
+                    type="ThreeDots"
+                    color="#00BFFF"
+                    height={window.innerHeight/5}
+                    width={window.innerWidth/5}
+                     />
     )
 }
 

@@ -3,8 +3,7 @@ import Post from '../Post/Post';
 import './Posts.css';
 import instance from '../../axios';
 import Loader from "react-loader-spinner";
-
-import { PostsProivder,PostsContext } from '../../Context/PostsContext/PostsContext';
+import { PostsContext } from '../../Context/PostsContext/PostsContext';
 import { GroupContext } from '../../Context/GroupContext/GroupContext';
 import { useHistory } from 'react-router';
 
@@ -37,7 +36,7 @@ const Posts = () => {
     },[posts])
 
 
-    var posts_to_view = [];
+    
 
     return (
         <div className="posts">
@@ -54,7 +53,7 @@ const Posts = () => {
             p.map( p => {
             var name = '';
              groups.forEach(g => {
-                if( g.id == p.group)
+                if( g.id === p.group)
                  {
                      return name = g.name;
                  }

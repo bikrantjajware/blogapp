@@ -22,7 +22,7 @@
 .singlePostEdit{
     font-size: 18px;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     
 }
 .singlePostIcon{

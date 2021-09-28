@@ -1,17 +1,17 @@
 import instance from '../../axios';
-import React,{useState,useEffect,useContext} from 'react'
+import React,{useState,useContext} from 'react'
 import { useHistory } from 'react-router';
 import { UserContext } from '../../Context/User/UserContext';
 import { PostsContext } from '../../Context/PostsContext/PostsContext';
 import './Write.css';
 import { GroupContext } from '../../Context/GroupContext/GroupContext';
-
+import Loader from 'react-loader-spinner';
 const Write = () => {
 
 
     
     
-    const [user,setUser] = useContext(UserContext);
+    const [user] = useContext(UserContext);
     const [posts,setPosts] = useContext(PostsContext);
     const [groups] = useContext(GroupContext);
     
@@ -21,43 +21,54 @@ const Write = () => {
     const [title,setTitle ]  = useState('');
     const [msg,setMsg ]  = useState('');
     const [groupSelect,setgroupSelect] = useState('');
+    const [loading,setLoading] = useState(false);
+
+
     const token = user? user.token : '';
     
     const history = useHistory();
     const postHandler = (e) => {
 
         e.preventDefault();
-
+        
         if(user===undefined)
         {
             history.push("/login");
             return;
         }
-        console.log(groupSelect);
+        setLoading(true);
+        // console.log(groupSelect);
         
-        instance.post(`api/posts/create/`,
-            {
-                title: title,
-               message: msg,
-               group:groupSelect != null ? parseInt(groupSelect) :'',
-            },
-            {
-                headers: {
-                    Authorization: 'token '+token,
-                   },
-        }).then(
-            res => {
-                const newPost = {...res.data};
-                setPosts( prevPosts => [...prevPosts,newPost]);
-                setTitle('');
-                setMsg('');
-            }
-        ).catch ( err => {
+        (async () => {
+                   await instance.post(`api/posts/create/`,
+                    {
+                        title: title,
+                    message: msg,
+                    group:groupSelect != null ? parseInt(groupSelect) :'',
+                    },
+                    {
+                        headers: {
+                            Authorization: 'token '+token,
+                        },
+                }).then(
+                    res => {
+                        const newPost = {...res.data};
+                        setPosts( prevPosts => [...prevPosts,newPost]);
+                        setLoading(false);
+                        setTitle('');
+                        setMsg('');
 
-            setTitle('');
-            setMsg('');
-            alert(err);
-        })
+                    }
+                ).catch ( err => {
+
+                    setTitle('');
+                    setMsg('');
+                    alert(err);
+                })
+
+        })();
+
+
     }
 
 
@@ -79,7 +90,13 @@ const Write = () => {
                 </div>
 
                 <div className="writeFormGroup">
-                <button type="submit" className="writeSubmit" onClick={postHandler}>Post</button>
+              { loading ? <Loader 
+                    className="loader"
+                    type="ThreeDots"
+                    color="#00BFFF"
+                    height={window.innerHeight/20}
+                    width={window.innerWidth/20}
+                        /> : <button type="submit" className="writeSubmit" onClick={postHandler}>Post</button>}
 
                 </div>
             </form>
