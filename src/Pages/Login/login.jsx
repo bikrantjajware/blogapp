@@ -1,19 +1,18 @@
 import React,{useState,useContext} from 'react'
 import './login.css';
 import { Link,useHistory } from 'react-router-dom';
-import axios from 'axios';
+import instance from '../../axios';
 import { UserContext } from '../../Context/User/UserContext';
 import { PostsContext } from '../../Context/PostsContext/PostsContext';
 import { GroupContext } from '../../Context/GroupContext/GroupContext';
+import Loader from 'react-loader-spinner';
 
-
-const allPostURL = 'https://backendblogger.herokuapp.com/api/posts/all/';
-const allGroupsURL = 'https://backendblogger.herokuapp.com/api/groups/all';
 
 const Login = () => {
 
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
+    const [loading,setLoading] = useState(false);
 
     const history = useHistory();
 
@@ -21,78 +20,88 @@ const Login = () => {
     const [posts,setPosts] = useContext(PostsContext);
     const [groups,setGroups] = useContext(GroupContext);
 
-    const loginHandler = (e) => {
+    const loginHandler =  (e)  => {
         
         e.preventDefault();
-     
-       
-        axios.post('https://backendblogger.herokuapp.com/api/accounts/token',{
-        username:username,
-        password:password,
-        }).then( res => {
-            
-            if(res.data)
-            {
-                const token = res.data.token;
-                axios.get('https://backendblogger.herokuapp.com/api/accounts/login',
-                       { 
-                           headers: {
-                            Authorization: 'token '+token,
-                           }
-                    }).then( res => {
-                        if( res.data)
-                        {
-                            setUser({
-                                username: res.data.username,
-                                password:password,
-                                email: res.data.email,
-                                id: res.data.pk,
-                                token:token,
-                            })
-                            
-                            
-                        }
-                        
-                    })
+        setLoading(true);
 
-
-                    axios.get(allPostURL,{
-                        headers : {
-                            Authorization: 'token '+token,
-                        }
-                    }).then(
-                        res => {
-                            setPosts(res.data);
-                        }
-                    )
-
-
-                    axios.get(allGroupsURL,{
-                        headers : {
-                            Authorization: 'token '+token,
-                        }
-                    }).then(
-                        res => {
-                            setGroups(res.data);
-                        }
-                    )
-
+        (async () => {
+            instance.post(`api/accounts/token`,{
+                username:username,
+                password:password,
+                }).then( res => {
                     
+                    if(res.data)
+                    {
+                        const token = res.data.token;
+                        (async () =>{
+                            await instance.get(`api/accounts/login`,
+                               { 
+                                   headers: {
+                                    Authorization: 'token '+token,
+                                   }
+                            }).then( res => {
+                                if( res.data)
+                                {
+                                    const logged_in_user = {
+                                        username: res.data.username,
+                                        password:password,
+                                        email: res.data.email,
+                                        id: res.data.pk,
+                                        token:token,
+                                    };
 
-            }
-        }).catch( error =>{
-            history.push('/logout');
-            
-        })
+                                    setUser(prev => logged_in_user);
+                                }
+                                
+                            }).catch( err => {
+                                history.push("/error");
+                            })
+                        } )();
+        
+                            
+                             (async () => {
+                               await instance.get(`api/groups/all`,{
+                                    headers : {
+                                        Authorization: 'token '+token,
+                                    }
+                                }).then(
+                                    res => {
+                                        setGroups(res.data);
+                                    }
+                                ).catch( err => {
+                                    history.push("/error");
+                                })
+                             } )();
+        
+                            
+        
+                    }
+                    setLoading(false)
+                    history.push("/");
+                }).catch( error =>{
+                    history.push("/error",{
+                        message:error.response.data.non_field_errors
+                    });
+                })
+        
 
-
-        history.push("/");
+        })();
+       
+        
     
 
     }
     return (
         <div className="login">
             <span className="loginTitle">Login</span>
+            { loading ? <Loader 
+                    className="loader"
+                    type="ThreeDots"
+                    color="#00BFFF"
+                    height={window.innerHeight/5}
+                    width={window.innerWidth/5}
+          />:
             <form action="" className="loginForm">
                 <label>
                     Username
@@ -106,7 +115,7 @@ const Login = () => {
                 <button className="loginRegisterButton"> <Link className="link" to="/register">Register</Link></button>
                
 
-            </form>
+            </form>}
         </div>
     )
 }

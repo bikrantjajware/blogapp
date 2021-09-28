@@ -4,12 +4,10 @@ import { UserContext } from '../../Context/User/UserContext';
 import { GroupContext } from '../../Context/GroupContext/GroupContext';
 import './Group.css';
 
-import axios from 'axios';
+
+import instance from '../../axios';
 
 // return <Group key={g.id} name={g.name} desc={g.description} members={g.members.count} posts={g.posts.length} />
-const groupLeave = (slug) => `https://backendblogger.herokuapp.com/api/groups/leave/${slug}`;
-const groupJoin = (slug) => `https://backendblogger.herokuapp.com/api/groups/join/${slug}`;
-const allGroupsURL = 'https://backendblogger.herokuapp.com/api/groups/alljoined';
 
 
 
@@ -23,8 +21,8 @@ const Group = (props) => {
 
    
     const exitHandlder = (slug) => {
-        const url = groupLeave(slug);
-        axios.get(url,{
+        
+        instance.get(`api/groups/leave/${slug}`,{
             headers : {
                 Authorization : 'token '+token,
             }
@@ -35,8 +33,8 @@ const Group = (props) => {
 
     const joinHandler = (slug) => {
        
-        const url = groupJoin(slug);
-        axios.get(url,{
+       
+        instance.get(`api/groups/join/${slug}`,{
             headers : {
                 Authorization : 'token '+token,
             }

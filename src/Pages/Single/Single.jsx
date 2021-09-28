@@ -9,10 +9,10 @@ import {useParams} from "react-router-dom";
 const Single = (p) => {
 
     const params = useParams();
-    const id = params['postID']
+    const slug = params['slug']
     return (
         <div className="single">
-            <SinglePost id={id} />
+            <SinglePost slug={slug} />
         </div>
     )
 }

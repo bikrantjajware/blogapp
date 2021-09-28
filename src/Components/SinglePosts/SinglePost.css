@@ -3,6 +3,8 @@
 }
 
 .singlePostWrapper{
+    display: flex;
+    flex-direction: column;
     padding: 20px;
     padding-right: 0;
 }
@@ -10,15 +12,22 @@
 .singlePostTitle{
     text-align: center;
     margin: 10px;
-    font-size: 34px;
+    font-size: 2.5em;
+    color: indigo;
+    border: none;
+}
+.singlePostTitle:focus{
+    outline: none;
 }
 .singlePostEdit{
-    float: right;
     font-size: 18px;
+    display: flex;
+    justify-content: end;
+    
 }
 .singlePostIcon{
-    margin-left:10px;
     cursor: pointer;
+    margin-right: 1em;
 }
 
 .singlePostInfo{
@@ -30,6 +39,32 @@
 }
 
 .singlePostDesc{
-    font-size: 20px;
+    font-size: 1.5em;
     line-height:30px;
+    border: none;
+    
+}
+.singlePostDesc:focus{
+    outline: none;
+}
+.singlePostDesc::first-letter{
+    font-size: 2em;
+    text-transform: uppercase;
+}
+.post-author-group{
+    display: flex;
+    flex-direction: column;
+}
+
+.updateButton{
+    width: fit-content;
+    align-self: center;
+    color: white;
+    background-color: teal;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 20px;
 }

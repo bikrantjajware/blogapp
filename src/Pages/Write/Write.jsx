@@ -1,5 +1,5 @@
-import axios from 'axios';
-import React,{useState,useContext} from 'react'
+import instance from '../../axios';
+import React,{useState,useEffect,useContext} from 'react'
 import { useHistory } from 'react-router';
 import { UserContext } from '../../Context/User/UserContext';
 import { PostsContext } from '../../Context/PostsContext/PostsContext';
@@ -8,7 +8,8 @@ import { GroupContext } from '../../Context/GroupContext/GroupContext';
 
 const Write = () => {
 
-    const postURL = 'https://backendblogger.herokuapp.com/api/posts/create/'
+
+    
     
     const [user,setUser] = useContext(UserContext);
     const [posts,setPosts] = useContext(PostsContext);
@@ -34,7 +35,7 @@ const Write = () => {
         }
         console.log(groupSelect);
         
-        axios.post(postURL,
+        instance.post(`api/posts/create/`,
             {
                 title: title,
                message: msg,

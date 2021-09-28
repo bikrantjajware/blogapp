@@ -13,7 +13,7 @@ import Single from './Pages/Single/Single';
 import { UserProivder,UserContext } from './Context/User/UserContext';
 import { PostsProivder } from './Context/PostsContext/PostsContext';
 import { GroupProvider } from './Context/GroupContext/GroupContext';
-
+import Error from './Pages/Error/Error';
 
 
 function App() {
@@ -47,11 +47,14 @@ function App() {
           <Route exact path="/settings">
             {user ? <Settings/> : <Register/>}
           </Route>
-          <Route exact path="/post/:postID">
+          <Route exact path="/post/:slug">
             <Single />
           </Route>
           <Route exact path="/logout">
             <Logout/>
+            </Route>
+            <Route exact path="/error">
+              <Error />
           </Route>
 
           </Switch>

@@ -1,12 +1,9 @@
 import React,{useState,useContext} from 'react'
 import './register.css';
 import { Link,useHistory } from 'react-router-dom';
-import axios from 'axios';
+import instance  from '../../axios';
 import { UserContext } from '../../Context/User/UserContext';
 
-
-
-const registerURL = 'https://backendblogger.herokuapp.com/api/accounts/register'
 
 
 
@@ -43,7 +40,7 @@ const Register = () => {
         
         
         
-        axios.post(registerURL,{
+        instance.post(`api/accounts/register`,{
             username:username,
             email : email,
             password:password,

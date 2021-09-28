@@ -8,24 +8,17 @@ import { Link } from 'react-router-dom';
      const [user,setUser] = useContext(UserContext);
     return (
         <div className="top">
-            <div className="topleft"><i className="topIcon fab fa-blogger-b"></i></div>
-            <div className="topcenter">
-                <ul className="toplist">
-                    <li className="toplistitem" > <Link className="link" to="/">HOME</Link></li>
-                    <li className="toplistitem"> <Link className="link" to="/home">ABOUT</Link></li>
-                    
-                    
-                </ul>
-
-            </div>
-            <div className="topright">
+            <div className="topleft"><Link className="link" to="/"><i className="topIcon fab fa-blogger-b" /></Link></div>
                 
          
+            <div className="topright">
                 {user ?
                     <ul className="toplist">
+                        <li className="toplistitem name" > {user.username} </li>
                          <li className="toplistitem"> <Link className="link" to="/logout" onClick={ ()=>{
                              setUser();
                          }} >Logout</Link></li>
+
                     </ul> :
                     <ul className="toplist">
                         <li className="toplistitem"> <Link className="link" to="/register">Register</Link></li>
@@ -35,7 +28,7 @@ import { Link } from 'react-router-dom';
                     
                     }
 
-                    {user ? <h1>{user.username}</h1>:""} 
+                 
                    
                 
             </div>

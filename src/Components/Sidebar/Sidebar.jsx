@@ -1,15 +1,13 @@
-import React,{useContext,useState} from 'react'
+import React,{useContext,useEffect,useState} from 'react'
 import './Sidebar.css';
 import { useHistory, } from 'react-router-dom';
-import axios from 'axios';
+import instance from '../../axios';
 import { UserContext } from '../../Context/User/UserContext';
 import { GroupContext } from '../../Context/GroupContext/GroupContext';
 import Group from '../Group/Group';
+import Loader from 'react-loader-spinner';
 
-const allGroupsURL = 'https://backendblogger.herokuapp.com/api/groups/all'
-const addGroupURL = 'https://backendblogger.herokuapp.com/api/groups/new/';
 
-const postURL = 'https://backendblogger.herokuapp.com/api/posts/create/'
 
 const Sidebar = () => {
 
@@ -18,6 +16,7 @@ const Sidebar = () => {
     const [name,setName]= useState('');
     const [desc,setDesc]  = useState('');
     const [clickCreate,setclickCreate] = useState(false) ;
+    const [loading,setLoading] = useState(false) ;
 
     const [user] = useContext(UserContext);
     
@@ -34,7 +33,7 @@ const Sidebar = () => {
             return;
         }
     
-        axios.get(allGroupsURL,{
+        instance.get(`api/groups/all`,{
             headers : {
                 Authorization : 'token '+token,
             }
@@ -48,38 +47,44 @@ const Sidebar = () => {
         //     history.push("/login");
         // }
 
+        useEffect( ()=> {},[groups])
+
     const addGroupHandler = (event,token) => {
 
         event.preventDefault();
-    
+        setLoading(true);
         
         if(token == undefined || token=='')
         {
             history.push('/login');
             return;
         }
+
+        
        
-        axios.post(addGroupURL,
-            {
-                name: name,
-                description: desc,
-            },
-            {
-                headers: {
-                    Authorization: 'token '+token,
-                   },
-        }).then( res => {
-            console.log(res.data);
-            setName('');
-            setDesc('');
-        }).catch( err => {
-            console.log(err);
-            setName('');
-            setDesc('');
-        })
+        (async () => {
+               await instance.post(`api/groups/new/`,
+                {
+                    name: name,
+                    description: desc,
+                },
+                {
+                    headers: {
+                        Authorization: 'token '+token,
+                    },
+            }).then( res => {
+                console.log(res.data);
+                setLoading(false);
+                loadGroups(token);
+            }).catch( err => {
+                console.log(err);
+            })
+        })();
 
-
-        loadGroups(token);
+        setName('');
+        setDesc('');
+        
+        
     }
 
 
@@ -93,12 +98,18 @@ const Sidebar = () => {
                     <input type="text" className="groupInput" placeholder="Enter Group Name..." value={name} onChange={e => setName(e.target.value)}/>
                     <textarea type="text" className="groupInput"  placeholder="Enter Group Description..." value={desc} onChange={e => setDesc(e.target.value)} />
                     </div>
-                    <button type="submit" className="groupSubmit" onClick={(e) => addGroupHandler(e,token)}>create</button>
+                  { loading ? "" : <button type="submit" className="groupSubmit" onClick={(e) => addGroupHandler(e,token)}>create</button> }
                 </form>
             </div> : ""}
            <div className="groupControls">
-            <i onClick={ () => setclickCreate(!clickCreate)} className="addGroup fas fa-plus-circle"  ></i>
-            <i   onClick={ () => loadGroups(token) } className="reload fas fa-redo"></i>
+            { loading ? <Loader 
+                    className="loader"
+                    type="ThreeDots"
+                    color="#00BFFF"
+                    height={window.innerHeight/15}
+                    width={window.innerWidth/15}
+          /> :   <><i onClick={ () => setclickCreate(!clickCreate)} className="addGroup fas fa-plus-circle"  ></i>
+            <i   onClick={ () => loadGroups(token) } className="reload fas fa-redo"></i> </>}
            </div>
             
             { groups.map( g => {

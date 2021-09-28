@@ -10,3 +10,10 @@
 .posts:first-child{
     margin-top: 50px
 }
+
+.loader{
+    align-self: center;
+    height: inherit;
+    width: inherit;
+    
+}

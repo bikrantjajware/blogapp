@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useContext,useState } from 'react'
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../Context/User/UserContext';
 import './Post.css';
 
 const Post = (props) => {
+
+    const [user] = useContext(UserContext);
+    
+    const [isAuthor,setIsAuthor] = useState(user==undefined ? false : user.username == props.username ? true : false  )
+
+
     return (
         <div>
             <div className="post">
                 <span className="postTitle">
                 
-                   <Link className="link" to={`/post/${props.id}`} > {props.title} </Link>
+                   <Link className="link" to={isAuthor ? `/post/${props.slug}` : '/'}  > {props.title} </Link>
                    <span className="postDesc">:  {props.group}</span>
                 </span>
                 <hr />
