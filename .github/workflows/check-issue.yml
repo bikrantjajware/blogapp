@@ -32,6 +32,7 @@ jobs:
             MESSAGE="${{ github.event.issue.body }}\n\nℹ️ **$ISSUE_AUTHOR** has some opened assigned issues: 🔧[View assigned issues]($ASSIGNED_ISSUE_URL)"
             echo "Updating issue with message: $MESSAGE"
             echo " repo $GITHUB_REPOSITORY"
+            echo ${{ guthub.event.issue }}
             curl -L \
             -X PATCH \
             -H "Accept: application/vnd.github+json" \
