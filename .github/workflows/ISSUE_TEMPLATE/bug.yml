@@ -1,0 +1,16 @@
+name: 🐛 Bug
+description: Report an issue to help improve the project.
+title: "[BUG] <description>"
+labels: ["🛠 goal: fix", "🚦 status: awaiting triage"]
+body:
+  - type: dropdown
+    id: assignee
+    attributes:
+      label: Do you want to work on this issue?
+      multiple: false
+      options:
+        - "No"
+        - "Yes"
+      default: 0
+    validations:
+      required: false
