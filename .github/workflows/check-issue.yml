@@ -34,7 +34,8 @@ jobs:
             ISSUE_NUMBER=${{ github.event.issue.number }}
             ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER"
             ASSIGNED_ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues?q=is%3Aopen+is%3Aissue+assignee%3A$ISSUE_AUTHOR"
-            BODY="$OLD_BODY\n\nℹ️ **$ISSUE_AUTHOR** has some opened assigned issues: 🔧[View assigned issues]($ASSIGNED_ISSUE_URL)"
+            UPDATE_TEXT="**$ISSUE_AUTHOR** has some opened assigned issues: 🔧[View assigned issues]($ASSIGNED_ISSUE_URL)"
+            BODY=$(jq --arg old_body "$OLD_BODY" --arg update_text "$UPDATE_TEXT" -n '{ body: ($old_body + "\n\n" + $update_text) }')
             echo "body= $BODY"
             curl -L \
             -X PATCH \
@@ -42,4 +43,4 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER \
-            -d "{\"body\":\"$BODY\"}"
+            -d "$BODY"
