@@ -37,7 +37,7 @@ jobs:
             ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER"
             ASSIGNED_ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues?q=is%3Aopen+is%3Aissue+assignee%3A$ISSUE_AUTHOR"
             UPDATE_TEXT="ℹ️ **$ISSUE_AUTHOR** has some opened assigned issues: 🔧[View assigned issues]($ASSIGNED_ISSUE_URL)"
-            BODY=$(jq --arg update_text "$UPDATE_TEXT" -n '{ body: ($OLD_BODY + "\n\n" + $update_text) }')
+            BODY=$(jq --arg old_body "$OLD_BODY" --arg update_text "$UPDATE_TEXT" -n '{ body: ($old_body + "\n\n" + $update_text) }')
             echo "body= $BODY"
             curl -L \
             -X PATCH \
