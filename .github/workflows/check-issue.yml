@@ -30,7 +30,7 @@ jobs:
             ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER"
             ASSIGNED_ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues?q=is%3Aopen+is%3Aissue+assignee%3A$ISSUE_AUTHOR"
             MESSAGE= "${{ github.event.issue.body }}\n\nℹ️ **$ISSUE_AUTHOR** has some opened assigned issues: 🔧[View assigned issues]($ASSIGNED_ISSUE_URL)"
-            $(echo "$github.event.issue.body" | grep -oP "Do you want to work on this issue?\s*\K[^\n]+")
+            $(echo "$github.event.issue.body" | grep -o "Do you want to work on this issue?\s*\K[^\n]+")
             
             echo "Updating issue with message: $MESSAGE"
             echo  ${{ github.event.issue }}
