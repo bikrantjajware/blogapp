@@ -34,7 +34,7 @@ jobs:
             ISSUE_NUMBER=${{ github.event.issue.number }}
             ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER"
             ASSIGNED_ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues?q=is%3Aopen+is%3Aissue+assignee%3A$ISSUE_AUTHOR"
-            BODY="${{ OLD_BODY }}\n\nℹ️ **$ISSUE_AUTHOR** has some opened assigned issues: 🔧[View assigned issues]($ASSIGNED_ISSUE_URL)"
+            BODY="$OLD_BODY\n\nℹ️ **$ISSUE_AUTHOR** has some opened assigned issues: 🔧[View assigned issues]($ASSIGNED_ISSUE_URL)"
             curl -L \
             -X PATCH \
             -H "Accept: application/vnd.github+json" \
