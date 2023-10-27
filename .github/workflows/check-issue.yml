@@ -23,7 +23,7 @@ jobs:
           echo "has_issues=$(test $ISSUES -gt 0 && echo true || echo false)" >> $GITHUB_OUTPUT
       - name: check author assignment choice
         run: |
-            CHOICE=echo "${{ github.event.issue.body }}" | grep -A 3 "Do you want to work on this issue?\(\s*\)" | grep -oE "(Yes|No)"
+            CHOICE=$(echo "${{ github.event.issue.body }}" | grep -A 3 "Do you want to work on this issue?\(\s*\)" | grep -oE "(Yes|No)")
             echo "CHOICE=$CHOICE" >> $GITHUB_ENV
 
       - name: Update issue if author has issues
