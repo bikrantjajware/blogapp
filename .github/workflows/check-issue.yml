@@ -21,10 +21,15 @@ jobs:
             -s "https://api.github.com/search/issues?q=repo:${{ github.repository }}+is:open+is:issue+assignee:$ISSUE_AUTHOR" | jq .total_count)
           echo "issue author $ISSUE_AUTHOR"
           echo "has_issues=$(test $ISSUES -gt 0 && echo true || echo false)" >> $GITHUB_OUTPUT
-      
-      - name: Update issue if author has issues
-        if: steps.check-assignee.outputs.has_issues == 'true'
+      - name: check author assignment choice
         run: |
+            CHOICE=echo "${{ github.event.issue.body }}" | grep -A 3 "Do you want to work on this issue?\(\s*\)" | grep -oE "(Yes|No)"
+            echo "CHOICE=$CHOICE" >> $GITHUB_ENV
+
+      - name: Update issue if author has issues
+        if: ${{ steps.check-assignee.outputs.has_issues == 'true' && ${{ env.CHOICE }} == "Yes" }}
+        run: |
+            CHOICE=echo "${{ github.event.issue.body }}" | grep -A 3 "Do you want to work on this issue?\(\s*\)" | grep -oE "(Yes|No)"
             ISSUE_AUTHOR=${{ github.event.issue.user.login }}
             ISSUE_NUMBER=${{ github.event.issue.number }}
             ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER"
