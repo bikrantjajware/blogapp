@@ -24,18 +24,20 @@ jobs:
       
       - name: Update issue if author has issues
         if: steps.check-assignee.outputs.has_issues == 'true'
+        env:
+          TEXT: ${{ github.event.issue.body }}
+          MESSAGE: "${{ github.event.issue.body }}\n\nℹ️ **$ISSUE_AUTHOR** has some opened assigned issues: 🔧[View assigned issues]($ASSIGNED_ISSUE_URL)"
         run: |
             ISSUE_AUTHOR=${{ github.event.issue.user.login }}
             ISSUE_NUMBER=${{ github.event.issue.number }}
             ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER"
             ASSIGNED_ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues?q=is%3Aopen+is%3Aissue+assignee%3A$ISSUE_AUTHOR"
-            MESSAGE="${{ github.event.issue.body }}\n\nℹ️ **$ISSUE_AUTHOR** has some opened assigned issues: 🔧[View assigned issues]($ASSIGNED_ISSUE_URL)"
             echo "Updating issue with message: $MESSAGE"
-            echo  github.event.issue
+            echo "${TEXT}"
             curl -L \
             -X PATCH \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER \
-            -d '{ "body":"$MESSAGE" }'
+            -d '{ "body":"${MESSAGE}" }'
