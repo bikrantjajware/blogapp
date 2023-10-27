@@ -27,7 +27,7 @@ jobs:
             echo "CHOICE=$CHOICE" >> $GITHUB_ENV
 
       - name: Update issue if author has issues
-        if: ${{ steps.check-assignee.outputs.has_issues == 'true' &&  env.CHOICE == "Yes" }}
+        if: ${{ steps.check-assignee.outputs.has_issues == 'true' &&  env.CHOICE == 'Yes' }}
         run: |
             CHOICE=echo "${{ github.event.issue.body }}" | grep -A 3 "Do you want to work on this issue?\(\s*\)" | grep -oE "(Yes|No)"
             ISSUE_AUTHOR=${{ github.event.issue.user.login }}
