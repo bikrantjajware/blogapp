@@ -29,12 +29,12 @@ jobs:
       - name: Update issue if author has issues
         if: ${{ steps.check-assignee.outputs.has_issues == 'true' &&  env.CHOICE == 'Yes' }}
         run: |
+            M2=$(jq -r .issue.body "$GITHUB_EVENT_PATH")
+            echo "my body $M2"
             ISSUE_AUTHOR=${{ github.event.issue.user.login }}
             ISSUE_NUMBER=${{ github.event.issue.number }}
             ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER"
             ASSIGNED_ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues?q=is%3Aopen+is%3Aissue+assignee%3A$ISSUE_AUTHOR"
-            echo "$GITHUB_EVENT_PATH"
-            M2=$(jq -r .issue.body "$GITHUB_EVENT_PATH")
             MESSAGE="${{ github.event.issue.body }}\n\nℹ️ **$ISSUE_AUTHOR** has some opened assigned issues: 🔧[View assigned issues]($ASSIGNED_ISSUE_URL)"
             echo " $M2"
             curl -L \
