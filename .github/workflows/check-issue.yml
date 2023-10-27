@@ -29,7 +29,6 @@ jobs:
       - name: Update issue if author has issues
         if: ${{ steps.check-assignee.outputs.has_issues == 'true' &&  env.CHOICE == 'Yes' }}
         run: |
-            CHOICE=echo "${{ github.event.issue.body }}" | grep -A 3 "Do you want to work on this issue?\(\s*\)" | grep -oE "(Yes|No)"
             ISSUE_AUTHOR=${{ github.event.issue.user.login }}
             ISSUE_NUMBER=${{ github.event.issue.number }}
             ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER"
