@@ -12,8 +12,7 @@ jobs:
     steps:
       - name: check author assignment choice
         run: |
-            CHOICE=$(echo "${{ github.event.issue.body }}" | grep -A 3 "Do you want to work on this issue?\(\s*\)" | grep -oiE "(yes)")
-            CHOICE=${CHOICE:-No}
+            CHOICE=$(echo "${{ github.event.issue.body }}" | grep -A 3 "Do you want to work on this issue?\(\s*\)" | ( grep -oiE "yes" || grep "No" ))
             echo "CHOICE=$CHOICE" >> $GITHUB_ENV
             
       - name: check if issue author has assigned issues
