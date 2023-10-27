@@ -31,7 +31,7 @@ jobs:
       - name: Update issue if author has issues
         if: steps.check-assignee.outputs.has_issues == 'true'
         run: |
-            OLD_BODY=${{ github.event.issue.body }}
+            OLD_BODY="${{ github.event.issue.body }}"
             ISSUE_AUTHOR=${{ github.event.issue.user.login }}
             ISSUE_NUMBER=${{ github.event.issue.number }}
             ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER"
