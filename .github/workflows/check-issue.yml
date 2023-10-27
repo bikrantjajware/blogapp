@@ -10,6 +10,11 @@ jobs:
       issues: write
     runs-on: ubuntu-latest
     steps:
+      - name: check author assignment choice
+        run: |
+            CHOICE=$(echo "${{ github.event.issue.body }}" | grep -A 3 "Do you want to work on this issue?\(\s*\)" | grep -oE "(Yes|No)")
+            echo "CHOICE=$CHOICE" >> $GITHUB_ENV
+            
       - name: check if issue author has assigned issues
         id: check-assignee
         run: |
@@ -21,10 +26,6 @@ jobs:
             -s "https://api.github.com/search/issues?q=repo:${{ github.repository }}+is:open+is:issue+assignee:$ISSUE_AUTHOR" | jq .total_count)
           echo "issue author $ISSUE_AUTHOR"
           echo "has_issues=$(test $ISSUES -gt 0 && echo true || echo false)" >> $GITHUB_OUTPUT
-      - name: check author assignment choice
-        run: |
-            CHOICE=$(echo "${{ github.event.issue.body }}" | grep -A 3 "Do you want to work on this issue?\(\s*\)" | grep -oE "(Yes|No)")
-            echo "CHOICE=$CHOICE" >> $GITHUB_ENV
 
       - name: Update issue if author has issues
         if: ${{ steps.check-assignee.outputs.has_issues == 'true' &&  env.CHOICE == 'Yes' }}
@@ -34,8 +35,8 @@ jobs:
             ISSUE_NUMBER=${{ github.event.issue.number }}
             ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER"
             ASSIGNED_ISSUE_URL="https://github.com/$GITHUB_REPOSITORY/issues?q=is%3Aopen+is%3Aissue+assignee%3A$ISSUE_AUTHOR"
-            UPDATE_TEXT="**$ISSUE_AUTHOR** has some opened assigned issues: 🔧[View assigned issues]($ASSIGNED_ISSUE_URL)"
-            BODY=$(jq --arg old_body "$OLD_BODY" --arg update_text "$UPDATE_TEXT" -n '{ body: ($old_body + "\n\n" + $update_text) }')
+            UPDATED_BODY="$OLD_BODY\n\n**$ISSUE_AUTHOR** has some opened assigned issues: 🔧[View assigned issues]($ASSIGNED_ISSUE_URL)"
+            BODY="{ \"body\": \"$UPDATED_BODY\" }"
             echo "body= $BODY"
             curl -L \
             -X PATCH \
