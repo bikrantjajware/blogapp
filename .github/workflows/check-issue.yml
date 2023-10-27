@@ -33,7 +33,7 @@ jobs:
             ANSWER= $(echo "$github.event.issue.body" | grep -oP "Do you want to work on this issue?\s*\K[^\n]+")
             echo ANSWER
             echo "Updating issue with message: $MESSAGE"
-            echo  ${{ github.event.issue }
+            echo  ${{ github.event.issue }}
             curl -L \
             -X PATCH \
             -H "Accept: application/vnd.github+json" \
