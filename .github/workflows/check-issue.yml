@@ -12,10 +12,12 @@ jobs:
     steps:
       - name: check author assignment choice
         run: |
-            CHOICE=$(echo "${{ github.event.issue.body }}" | grep -A 3 "Do you want to work on this issue?\(\s*\)" | grep -oE "(Yes|No)")
+            CHOICE=$(echo "${{ github.event.issue.body }}" | grep -A 3 "Do you want to work on this issue?\(\s*\)" | grep -oiE "(yes)")
+            CHOICE=${CHOICE:-No}
             echo "CHOICE=$CHOICE" >> $GITHUB_ENV
             
       - name: check if issue author has assigned issues
+        if: env.CHOICE == 'Yes'
         id: check-assignee
         run: |
           ISSUE_AUTHOR=${{ github.event.issue.user.login }}
@@ -28,7 +30,7 @@ jobs:
           echo "has_issues=$(test $ISSUES -gt 0 && echo true || echo false)" >> $GITHUB_OUTPUT
 
       - name: Update issue if author has issues
-        if: ${{ steps.check-assignee.outputs.has_issues == 'true' &&  env.CHOICE == 'Yes' }}
+        if: steps.check-assignee.outputs.has_issues == 'true'
         run: |
             OLD_BODY=$(jq -r .issue.body "$GITHUB_EVENT_PATH")
             ISSUE_AUTHOR=${{ github.event.issue.user.login }}
